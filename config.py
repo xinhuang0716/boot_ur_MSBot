@@ -12,7 +12,7 @@ class DefaultConfig:
     APP_PASSWORD: str = os.environ.get("MicrosoftAppPassword", "")
 
     # Ollama LLM settings
-    OLLAMA_BASE_URL: str = os.environ.get("OLLAMA_BASE_URL", "http://172.21.134.123:11434")
+    OLLAMA_BASE_URL: str = os.environ.get("OLLAMA_BASE_URL", "http://localhost:11434")
     OLLAMA_MODEL: str = os.environ.get("OLLAMA_MODEL", "gemma3:4b")
 
     # Conversation history

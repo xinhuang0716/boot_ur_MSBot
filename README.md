@@ -84,42 +84,67 @@ Azure Bot Service  (驗證 Token + 路由)
 
 ## Getting Started
 
-### 1. Prequisites
+### 1. Prerequisites
 
 - Python 3.12+
 - [uv](https://docs.astral.sh/uv/)
-- [Ollama](https://ollama.com/) 並已拉取模型：`ollama pull gemma3:4b`
+- An OpenAI-compatible LLM backend, e.g.:
+  - **[Ollama](https://ollama.com/)** (local) — pull a model: `ollama pull gemma3:4b`
+  - **[LM Studio](https://lmstudio.ai/)** (local) — load any GGUF model and start the local server
+  - Any remote Ollama instance or OpenAI-compatible API
 
-### 2. Virtual Environment and Dependencies
+### 2. Clone the Repository
+
+```bash
+git -c http.sslVerify=false clone https://github.com/xinhuang0716/boot_ur_MSBot.git
+cd boot_ur_MSBot
+```
+
+> **Note:** `http.sslVerify=false` is only needed if you are behind a corporate proxy with TLS inspection. Remove it if not required.
+
+### 3. Install Dependencies
 
 ```bash
 uv sync
 ```
 
-### 3. 設定環境變數（可選）
+### 4. Configure Environment
 
-本機測試可略過，預設值即可運作。若需要調整，建立 `.env`：
+Copy the example file and edit it to match your setup:
+
+```bash
+# Linux / macOS
+cp .env.example .env
+
+# Windows PowerShell
+Copy-Item .env.example .env
+```
+
+Then open `.env` and adjust as needed:
 
 ```env
-# Azure Bot 憑證（本機測試留空）
+# Azure Bot credentials (leave empty for local Emulator testing)
 MicrosoftAppId=
 MicrosoftAppPassword=
 
-# Ollama 服務位置與模型
-OLLAMA_BASE_URL=http://localhost:11434
+# LLM backend — change to match your setup
+OLLAMA_BASE_URL=http://localhost:11434   # Ollama default
+# OLLAMA_BASE_URL=http://localhost:1234  # LM Studio default
+
+# Model name (must match what is loaded in your LLM backend)
 OLLAMA_MODEL=gemma3:4b
 
-# 對話歷史最多保留幾則訊息（預設 20，即 10 回合）
+# Conversation history limit (number of messages, default 20 = 10 turns)
 HISTORY_LIMIT=20
 ```
 
-### 4. 啟動 Bot
+### 5. Start the Bot
 
 ```bash
 uv run python app.py
 ```
 
-啟動後輸出：
+Expected output:
 
 ```
 Bot started
@@ -128,12 +153,12 @@ Bot started
   Ollama       : http://localhost:11434
 ```
 
-### 5. 使用 Bot Framework Emulator 測試
+### 6. Test with Bot Framework Emulator
 
-1. 下載 [Bot Framework Emulator](https://github.com/microsoft/BotFramework-Emulator/releases)
-2. **Open Bot** → Bot URL 填入 `http://localhost:3978/api/messages`
-3. App ID / Password 留空
-4. 開始對話
+1. Download [Bot Framework Emulator](https://github.com/microsoft/BotFramework-Emulator/releases)
+2. **Open Bot** → Bot URL: `http://localhost:3978/api/messages`
+3. App ID / Password — leave empty
+4. Start chatting
 
 ---
 
@@ -195,7 +220,7 @@ Assistant:
 
 ---
 
-## Deply to Azure
+## Deploy to Azure
 
 1. 建立 **Azure Bot** 資源，取得 App ID 與 App Password
 2. 設定環境變數 `MicrosoftAppId`、`MicrosoftAppPassword`
