@@ -1,0 +1,11 @@
+[project]
+name = "botframework"
+version = "0.1.0"
+description = "A getting-started bot application using Microsoft Bot Framework and Ollama LLM."
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "botbuilder-integration-aiohttp",
+    "aiohttp",
+]
+
