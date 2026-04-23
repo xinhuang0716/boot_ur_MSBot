@@ -7,6 +7,9 @@ import sys
 import traceback
 from datetime import datetime, timezone
 
+from dotenv import load_dotenv
+load_dotenv()
+
 from aiohttp import web
 from botbuilder.core import (
     BotFrameworkAdapter,
